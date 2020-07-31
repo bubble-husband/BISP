@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.form.js"></script>
+<title>Insert title here</title>
+</head>
+ <body>
+	<form id="itemForm" action="/consumer/article/update" method="post" enctype="multipart/form-data">
+		<table>
+			<tr>
+				<td>文章编号</td>
+				<td>用户编号</td>
+				<td>标题</td>
+				<td>摘要</td>
+				<td>内容</td>
+				<td>点击数</td>
+				<td>评论数</td>
+				<td>收藏数</td>
+				<td>创建时间</td>
+				<td>最后修改时间</td>
+				<td>标题图片</td>
+				<td></td>
+				<td>分类编号</td>
+				<td>操作</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="articleId" placeholder="articleId" th:field="*{article.articleId}" readonly="readonly" ></td>
+				<td><input type="text" name="userId" placeholder="userId" th:field="*{article.userId}" readonly="readonly" ></td>
+				<td><input type="text" name="title" placeholder="title" th:field="*{article.title}"></td>
+				<td><input type="text" name="summary" placeholder="summary" th:field="*{article.summary}"></td>
+				<td><input type="text" name="content" placeholder="content" th:field="*{article.content}"></td>
+				<td><input type="text" name="clickNum" placeholder="clickNum" th:field="*{article.clickNum}" readonly="readonly" ></td>
+				<td><input type="text" name="commentNum" placeholder="commentNum" th:field="*{article.commentNum}" readonly="readonly" ></td>
+				<td><input type="text" name="collectNum" placeholder="collectNum" th:field="*{article.collectNum}" readonly="readonly" ></td>
+				<td><input type="text" name="createTime" placeholder="createTime" th:field="*{article.createTime}" readonly="readonly" ></td>
+				<td><input type="text" name="updateTime" placeholder="" th:field="*{article.updateTime}" readonly="readonly" ></td>
+				<td><img id='imgSrc' th:src="@{${article.titlePicture}}" height="80" width="80" alt=""/></td>
+				<td><input type="file" name="file" id="file" onchange="submitUpload()"></td>
+				<td><input type="hidden" name="titlePicture" id="titlePicture" th:field="*{article.titlePicture}"/></td>
+				<td><input type="text" name="sortId" placeholder="sortId" th:field="*{article.sortId}"></td>
+				<td><input type="submit" value="修改"></td>			
+			</tr>
+		</table>
+	</form> 
+</body>
+<script type="text/javascript">
+	function submitUpload() {
+		var option = {
+			type : 'POST',
+			url : '/upload.do',
+			dataType : 'text',
+			data : {
+				file : 'file'
+			},
+			success : function(data) {
+				//把json格式的字符串转换成json对象
+				reg = new RegExp("\\\\", "g")
+				data = data.replace(reg, "\\\\")
+				/*转换base64*/
+				var img = document.getElementById('file')
+				var imgFile = new FileReader();
+				imgFile.readAsDataURL(img.files[0]);
+				var imgData
+				imgFile.onload = function() {
+					imgData = this.result; //base64数据  
+					var jsonObj = eval('(' + data + ')')
+					//返回服务器图片路径，把图片路径设置给img标签
+					$("#imgSrc").attr("src", imgData);
+					//数据库保存相对路径
+					$("#titlePicture").val(jsonObj.relativePath);
+				}
+			}
+		};
+		$("#itemForm").ajaxSubmit(option);
+	}
+</script>
+</html>

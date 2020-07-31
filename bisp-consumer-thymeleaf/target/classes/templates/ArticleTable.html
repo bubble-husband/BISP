@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<table>
+	<tr>
+		<td>文章编号</td>
+		<td>用户编号</td>
+		<td>标题</td>
+		<td>摘要</td>
+		<td>内容</td>
+		<td>点击数</td>
+		<td>评论数</td>
+		<td>收藏数</td>
+		<td>创建时间</td>
+		<td>最后修改时间</td>
+		<td>标题图片</td>
+		<td>分类编号</td>
+		<td><a href="/consumer/article/toAdd">添加</a></td>
+	</tr>
+	<tr th:each="a:${pageInfo.list}">
+		<td th:text="${a.articleId}"></td>
+		<td th:text="${a.userId}"></td>
+		<td th:text="${a.title}"></td>
+		<td th:text="${a.summary}"></td>
+		<td th:text="${a.content}"></td>
+		<td th:text="${a.clickNum}"></td>
+		<td th:text="${a.commentNum}"></td>
+		<td th:text="${a.collectNum}"></td>
+		<td th:text="${a.createTime}"></td>
+		<td th:text="${a.updateTime}"></td>
+		<td><img th:src="@{${a.titlePicture}}" height="80" width="80"></td>
+		<!-- <td th:text="${a.titlePicture}"></td> -->
+		<td th:text="${a.sortId}"></td>
+		<td><a th:href="@{'/consumer/article/toUpdate?articleId=' + ${a.articleId} }">修改</a></td>
+		<td><a th:href="@{'/consumer/article/delete?articleId=' + ${a.articleId}}">删除</a></td>
+	</tr>
+	</table>
+	<p>当前第&nbsp;<span th:text="${pageInfo.pageNum}"></span>&nbsp;页&nbsp;&nbsp;&nbsp;总共&nbsp;<span th:text="${pageInfo.pages}"></span>&nbsp;页&nbsp;&nbsp;&nbsp;总共&nbsp;<span th:text="${pageInfo.total}"></span>&nbsp;条记录</p>
+	<a th:href="${'/consumer/article/listPage?pageNum='+pageInfo.navigateFirstPage}">首页</a>
+ 	<a th:href="${'/consumer/article/listPage?pageNum='+pageInfo.prePage}">上一页</a>
+	<a th:href="${'/consumer/article/listPage?pageNum='+pageInfo.nextPage}">下一页</a>
+	<a th:href="${'/consumer/article/listPage?pageNum='+pageInfo.navigateLastPage}">尾页</a>
+
+</body>
+</html>

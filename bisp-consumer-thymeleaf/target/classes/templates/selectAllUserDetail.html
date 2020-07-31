@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+		<tr>
+			<th>用户信息id</th>
+			<th>用户id</th>
+			<th>昵称</th>
+			<th>生日</th>
+			<th>性别</th>
+			<th>头像</th>
+		</tr>
+		<tr th:each="i:${allList}">
+			<td th:text="${i.userdetailId}" ></td>
+			<td th:text="${i.userId}"></td>
+			<td th:text="${i.nickname}"></td>
+			<td th:text="${#dates.format(i.birthday,'yyyy-MM-dd')}"></td>
+			<td th:text="${i.sex}"></td>
+			<td th:text="${i.photo}"></td>
+			<td><a th:href="'editUpdate?userdetailId='+${i.userdetailId}">修改</td>
+			<td><a th:href="'deleteById?userdetailId='+${i.userdetailId}">删除</a></td>
+		</tr>
+	</table>
+
+	<!-- <form action="consumer/userDetail/deleteById" method="post">
+		<input type="text" name="userdetailId" placeholder="请输入id"> <input
+			type="submit" value="确认删除">
+	</form>
+	<form action="/adminUpdate" method="post">
+		<input type="text" name="userdetailId" placeholder="请输入id"> 
+		<input type="text" name="userId" placeholder="请输入用户id">
+		<input type="text" name="nickname" placeholder="请输入昵称"> 
+		<input type="text" name="birthday" placeholder="请输入生日">
+		<input type="text" name="sex" placeholder="请输入性别">
+		<input type="submit" value="确认修改">
+	</form> -->
+</body>
+</html>

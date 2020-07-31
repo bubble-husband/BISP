@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.form.js"></script>
+<title>Insert title here</title>
+</head>
+ <body>
+ 	<form id="itemForm" action="/consumer/article/add" method="post" enctype="multipart/form-data">
+		<table>
+			<tr>
+				<td>用户编号</td>
+				<td>标题</td>
+				<td>摘要</td>
+				<td>内容</td>
+				<td>标题图片</td>
+				<td></td>
+				<td>分类编号</td>
+				<td>操作</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="userId" placeholder="用户编号" ></td>
+				<td><input type="text" name="title" placeholder="标题" ></td>
+				<td><input type="text" name="summary" placeholder="摘要"></td>
+				<td><input type="text" name="content" placeholder="内容" ></td>
+				<td><img id='imgSrc' height="80" width="80" alt=""/></td>
+				<td><input type="file" name="file" id="file" onchange="submitUpload()"></td>
+				<td><input type="hidden" name="titlePicture" id="titlePicture"></td>
+				<td><input type="text" name="sortId" placeholder="分类编号" ></td>
+				<td><input type="submit" value="添加"></td>
+			</tr>
+		</table>
+	</form>  
+</body>
+<script type="text/javascript">
+	function submitUpload() {
+		var option = {
+			type : 'POST',
+			url : '/upload.do',
+			dataType : 'text',
+			data : {
+				file : 'file'
+			},
+			success : function(data) {
+				//把json格式的字符串转换成json对象
+				reg = new RegExp("\\\\", "g")
+				data = data.replace(reg, "\\\\")
+				/*转换base64*/
+				var img = document.getElementById('file')
+				var imgFile = new FileReader();
+				imgFile.readAsDataURL(img.files[0]);
+				var imgData
+				imgFile.onload = function() {
+					imgData = this.result; //base64数据  
+					var jsonObj = eval('(' + data + ')')
+					//返回服务器图片路径，把图片路径设置给img标签
+					$("#imgSrc").attr("src", imgData);
+					//数据库保存相对路径
+					$("#titlePicture").val(jsonObj.relativePath);
+				}
+			}
+		};
+		$("#itemForm").ajaxSubmit(option);
+	}
+</script>
+</html>

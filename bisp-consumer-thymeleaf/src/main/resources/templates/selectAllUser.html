@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table border="0">
+	<tr>
+		<th>用户ID</th>
+		<th>用户名</th>
+		<th>密码</th>
+		<th>权限</th>
+		<th>删除</th>
+	</tr>
+	
+	<tr th:each="i:${allList}">
+		<td th:text="${i.userId}"></td>
+		<td th:text="${i.username}"></td>
+		<td th:text="${i.password}"></td>
+		<td th:text="${i.power}"></td>
+		<td><a th:href="@{'/consumer/user/delById?userId='+${i.userId}}">删除</a></td>
+	</tr>	
+	</table>
+</body>
+</html>

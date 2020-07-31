@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:http="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>归档 </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/all.css">
+    <link rel="stylesheet" href="/static/css/tags.css">
+    <link rel="stylesheet" href="/static/css/comment.css">
+    <link rel="stylesheet" href="/static/css/categories.css">
+    <link rel="stylesheet" href="/static/css/archives.css">
+    <link rel="stylesheet" href="/static/css/plugs_paging.css">
+    <link href="https://lib.baomitu.com/font-awesome/5.8.0/css/fontawesome.min.css" rel="stylesheet">
+
+    <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://lib.baomitu.com/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--引入共有头部-->
+    <div th:replace="header :: header"></div>
+    
+    <div style="text-align:center">
+    	<p>根据日期查询</p>
+	<form action="/consumer/article/selectByDate">
+		<input type="date" name="start">
+		<input type="date" name="end">
+		<input type="submit" value="查询">
+	</form>
+    </div>
+    <!--页面主体-->
+    <div id="main">
+        <div class="am-container">
+            <div class="am-g">
+                <div class="site-inner">
+                    <div class="am-u-sm-12 am-u-md-3">
+                        <div class="categories">
+                        	<div class="categories-title">
+                                <h3 style="font-size: 20px">归档</h3>
+                            </div> 
+                            <div class="categories-comment am-animation-slide-top">
+                                <div class="category" >
+    	                            <span>
+    		                            <a class="categoryName" href="/consumer/archives/listday">
+    			                            <font style="vertical-align: inherit;">
+    			                            <font style="vertical-align: inherit;" >本日更新</font>
+    			                            </font>
+    		                            </a>
+	                                </span>
+	                                
+                                </div>
+                                <div class="category" >
+                               		<span>
+    		                            <a class="categoryName" href="/consumer/archives/listmonth">
+    			                            <font style="vertical-align: inherit;">
+    			                            <font style="vertical-align: inherit;" >本月更新</font>
+    			                            </font>
+    		                            </a>
+	                                </span>
+	                            </div>
+	                            <div class="category" >
+	                                <span>
+    		                            <a class="categoryName" href="/consumer/archives/listyear">
+    			                            <font style="vertical-align: inherit;">
+    			                            <font style="vertical-align: inherit;" >本年更新</font>
+    			                            </font>
+    		                            </a>
+	                                </span>
+	                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-md-9">
+                        <div class="categoryTimeline">
+                            <div class="timeline timeline-wrap">
+                                <div class="timeline-row">
+                                    <span class="node" style="-webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
+                                        <i class=""></i>
+                                    </span>
+                                    <h1 class="title">列表</h1>
+                                </div>
+                                <div class="timeline-row-major" th:each="a:${article}">
+                                    <div style="height: 88.4px">
+                                        <div class="timeline-row-major">
+    	                                    <span class="node am-animation-slide-top am-animation-delay-1"></span>
+    	                                    <div class="content am-comment-main am-animation-slide-top am-animation-delay-1">
+    		                                    <header class="am-comment-hd" style="background: #fff">
+    			                                    <div class="contentTitle am-comment-meta">
+    				                                    <a th:href="${'/consumer/article/selectById?articleId='+a.articleId}">
+    					                                    <font style="vertical-align: inherit;">
+    					                                    	<font style="vertical-align: inherit;" th:text="${a.title}" ></font>
+    					                                    </font>
+    				                                    </a>
+    			                                    </div>
+    		                                    </header>
+        	                                    <div class="am-comment-bd">
+        		                                    <i class="am-icon-calendar"> 
+        			                                    <a href="">
+        				                                    <font style="vertical-align: inherit;">
+        				                                    	<font style="vertical-align: inherit;" th:text="${a.createTime}" ></font>
+        				                                    </font>
+        			                                    </a>
+        		                                    </i>
+        		                                    <i class="am-icon-folder"> 
+        			                                    <a href="">
+        				                                    <font style="vertical-align: inherit;">分类ID:
+        				                                    	<font style="vertical-align: inherit;" th:text="${a.sortId}"></font>
+        				                                    </font>
+        			                                    </a>
+        		                                    </i>
+        	                                    </div>
+    	                                    </div>
+    	                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--引入共有底部-->
+    <div th:replace="footer :: footer"></div>
+
+</div>
+
+<script src="/static/js/all.js"></script>
+
+
+
+</body>
+</html>

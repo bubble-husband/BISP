@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="/consumer/userDetail/adminUpdate"  method="post">
+<table border="0">
+	<tr>
+		<th>用户信息id</th>
+		<th>用户id</th>
+		<th>昵称</th>
+		<th>生日</th>
+		<th>性别</th>
+		<th>头像</th>
+	</tr>
+		<tr>
+		<td><input type ="text" name ="userdetailId"  th:value="${userDetail.userdetailId}" readonly="true"></td>
+		<td ><input type ="text" name="userId"  th:value="${userDetail.userId}" readonly="true" ></td>
+		<td><input type ="text" name="nickname"  th:value="${userDetail.nickname}"></td>
+		<td><input type ="text" name="birthday"  th:value="${#dates.format(userDetail.birthday,'yyyy-MM-dd')}"></td>
+		<td><input type ="text" name="sex"  th:value="${userDetail.sex}"></td>
+		<td><input type ="text" name="photo"  th:value="${userDetail.photo}"></td>
+		<td><input type="submit" value="确认修改"></td>	
+		</tr>
+	</table>
+</form>
+</body>
+</html>

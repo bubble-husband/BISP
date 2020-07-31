@@ -1,0 +1,33 @@
+server:
+   port: 80
+
+spring:
+   thymeleaf: 
+     cache: false
+     check-template-location: true
+     mode: LEGACYHTML5　                             # 这个里面不是严格的html5规范　不设置仍然会报错
+     enabled: true
+     servlet:
+       content-type: text/html
+     prefix: classpath:/templates/
+     suffix: .html
+   mvc:
+     static-path-pattern: /static/**
+   resources:
+     static-locations: classpath:/static/
+
+pagehelper: 
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+#feign: 
+#  hystrix: 
+#    enabled: true
+  
+eureka:
+  client:
+    register-with-eureka: false
+    service-url: 
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+ <body>
+
+	
+	
+		<p>更新一条记录</p>
+	<form action="/consumer/article/update" method="post">
+		<input readonly="readonly" type="text" name="articleId" placeholder="articleId" th:field="*{article.articleId}">
+		<input readonly="readonly" type="text" name="userId" placeholder="userId" th:field="*{article.userId}">
+		<input type="text" name="title" placeholder="title" th:field="*{article.title}">
+		<input type="text" name="summary" placeholder="summary" th:field="*{article.summary}">
+		<input type="text" name="content" placeholder="content" th:field="*{article.content}">
+		<input readonly="readonly" type="text" name="clickNum" placeholder="clickNum" th:field="*{article.clickNum}">
+		<input readonly="readonly" type="text" name="commentNum" placeholder="commentNum" th:field="*{article.commentNum}">
+		<input readonly="readonly" type="text" name="collectNum" placeholder="collectNum" th:field="*{article.collectNum}">
+		<input readonly="readonly" type="text" name="createTime" placeholder="createTime" th:field="*{article.createTime}">
+		<input readonly="readonly" type="text" name="updateTime" placeholder="" th:field="*{article.updateTime}"> 
+		<input type="text" name="titlePicture" placeholder="titlePicture" th:field="*{article.titlePicture}">
+		<input type="text" name="sortId" placeholder="sortId" th:field="*{article.sortId}">
+		<input type="submit" value="修改">
+	</form> 
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:http="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<title>BISP</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css"
+	rel="stylesheet">
+<link
+	href="https://lib.baomitu.com/font-awesome/5.8.0/css/fontawesome.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" href="/static/css/all.css">
+<link rel="stylesheet" href="/static/css/index.css">
+<link rel="stylesheet" href="/static/css/plugs_paging.css">
+
+<script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://lib.baomitu.com/underscore.js/1.9.1/underscore-min.js"></script>
+<script src="/static/js/lastUrl.js"></script>
+<script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+
+</head>
+<body>
+	<div id="app">
+		<!--主页头部含有小屏幕时名片，不应使用共有头部-->
+		<div class="header">
+			<div class="am-topbar" style="margin-bottom: 0">
+
+				<button
+					class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+					style="background-color: #CCCCCC; border-color: white; border-radius: 6px"
+					data-am-collapse="{target: '#doc-topbar-collapse'}">
+					<span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span>
+				</button>
+
+
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+                    <ul class="am-nav am-nav-pills am-topbar-nav">
+                        <li><a class="top_bar" href="/consumer/home/index" style="cursor: pointer;"><span class="am-icon-home"></span>&nbsp;首页</a></li>
+                        <li><a class="top_bar" href="/consumer/sort/listSort" style="cursor: pointer;"><span class="am-icon-th"></span>&nbsp;分类</a></li>
+                        <li><a class="top_bar" href="/consumer/archives/listArchives" style="cursor: pointer;"><span class="am-icon-archive"></span>&nbsp;归档</a></li>
+                        <li><a class="top_bar" href="/consumer/article/toAdd" style="cursor: pointer;"><span class="am-icon-calendar-plus-o"></span>&nbsp;写博客</a></li>
+                        <li><a class="top_bar" href="/consumer/home/aboutme" style="cursor: pointer;"><span class="am-icon-user"></span>&nbsp;关于我们</a> </li>
+                    </ul>
+
+
+					<div class="am-topbar-right"
+						th:if="${session.remoteUser!=null}">
+						<div class="am-dropdown"
+							data-am-dropdown="{boundary: '.am-topbar'}">
+							<button
+								class="personalSpace am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle">
+								<span th:text="${session.remoteUser}"></span> 
+								<span class="am-icon-caret-down"></span>
+							</button>
+							<ul class="am-dropdown-content">
+								<li><a href="/user" >个人主页</a></li>
+								<li><a href="/superadmin">网站后台管理</a></li>
+								<li><a href="/consumer/logout">退出登录</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="am-topbar-right"
+						th:if="${session.remoteUser==null}">
+						<a href="/consumer/user/register"
+							class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
+							style="color: white">注册</a>
+					</div>
+					<div class="am-topbar-right"
+						th:if="${session.remoteUser==null}">
+						<a href="/consumer/token/login"
+							class="loginBtn am-btn am-btn-primary am-topbar-btn am-btn-sm"
+							style="color: white">登录</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!--页面主体-->
+		<div id="main" style="margin-top: 16px"></div>
+		<div class="am-g">
+			<div class="am-u-sm-12 am-u-lg-3 am-hide-md-down">
+				<div id="left">
+ 					 <!-- <div class="myCard">
+						<div class="am-g">
+							 <div class="am-u-sm-5">
+								<div class="img-title" th:each="ud:${udetail}">
+									<img class="img" th:src="'/static/img/'+${ud.photo}">
+								</div>
+							</div>
+							<div class="am-u-sm-7" style="padding: 0 20px 0 0;">
+								<div class="img-words" th:each="un:${uname}">
+									<h3 id="name" th:text="${un.username}"></h3>
+								</div>
+							</div>
+						</div>
+					</div>  -->
+
+					
+					<div class="new-leaveWord">
+						<div data-am-widget="list_news"
+							class="am-list-news am-list-news-default">
+							<div class="am-list-news-hd am-cf">
+								<h1>阅读量榜</h1>
+								<div class="am-list-news-bd" th:each="cl,itemStat:${listclick}" th:if="${itemStat.count<6}" >
+								<a th:href="${'/consumer/article/selectById?articleId='+cl.articleId}" style="padding-bottom: 5px"
+									th:text="${cl.title}"></a>
+							</div>
+							</div>
+						</div>
+					</div>
+					<div class="new-leaveWord">
+						<div data-am-widget="list_news"
+							class="am-list-news am-list-news-default">
+							<div class="am-list-news-hd am-cf">
+								<h1>收藏量榜</h1>
+								<div class="am-list-news-bd" th:each="co,itemStat:${listcollect}" th:if="${itemStat.count<6}" >
+								<a th:href="${'/consumer/article/selectById?articleId='+co.articleId}" style="padding-bottom: 5px"
+									th:text="${co.title}"></a>
+							</div>
+							</div>
+						</div>
+					</div>
+					<div class="new-comment">
+						<div data-am-widget="list_news"
+							class="am-list-news am-list-news-default">
+							<div class="am-list-news-hd am-cf">
+								
+									<h2>最新评论</h2>
+								
+							</div>
+							<div class="am-list-news-bd" th:each="c:${comment}">
+								<a th:href="${'/consumer/article/selectById?articleId='+c.articleId}" style="padding-bottom: 5px"
+									th:text="'用户'+${c.userId}+'：'+${c.commentContent}"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="showArticle am-u-sm-12 am-u-lg-6">
+				<div class="articles">
+					<div class="center" th:each="a:${pageInfo.list}">
+						<div class="empty">
+							<header class="article-header">
+								<h1 >
+									<a class="article-title" th:href="${'/consumer/article/selectById?articleId='+a.articleId}" target="_blank"
+										th:text="${a.title}">&nbsp;</a>
+								</h1>
+								<div class="article-meta row">
+									<span class="articleType am-badge am-badge-success"
+										th:text="'分类:'+${a.sortId}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									<div class="articlePublishDate">
+										<i class="am-icon-calendar" id="longtime" th:text="${a.createTime}">
+										</i>
+									</div>
+									<div class="originalAuthor">
+										<i class="am-icon-user" th:text="'作者ID:'+${a.userId}"></i>
+									</div>
+								</div>
+							</header>
+							<div class="article-entry" style="height: 200px"
+								th:text="${a.summary}"></div>
+							<div class="read-all">
+								<a th:href="${'/consumer/article/selectById?articleId='+a.articleId}" target="_blank">阅读全文 <i
+									class="am-icon-angle-double-right"></i></a>
+							</div>
+							<hr>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="my-row" id="page-father">
+					<div id="pagination">
+						<ul class="am-pagination  am-pagination-centered">
+							<li class="am-active"><a th:href="${'/consumer/home/index?pageNum='+(pageInfo.pageNum-1)}">&laquo; 上一页</a></li>
+							<li class="am-active"><a href="/consumer/home/index?pageNum=1">1</a></li>
+							<li class="am-active"><a href="/consumer/home/index?pageNum=2">2</a></li>
+							<li class="am-active"><a href="/consumer/home/index?pageNum=3">3</a></li>
+							<li class="am-active"><a href="/consumer/home/index?pageNum=4">4</a></li>
+							<li class="am-active"><a href="/consumer/home/index?pageNum=5">5</a></li>
+							<li class="am-active"><a th:href="${'/consumer/home/index?pageNum='+(pageInfo.pageNum+1)}">下一页 &raquo;</a></li>
+						</ul>
+						
+
+					</div>
+				</div>
+			</div>
+
+
+			<div class="am-u-sm-12 am-u-lg-3">
+				<div id="right">
+
+					<h3 class="widget-title">推荐学习</h3>
+					<div class="widget">
+						<div class="bg-danger">
+							<div class="zhy-info">
+								<i class="am-icon-quote-left" style="float: left"></i><br>
+								<div class="zhy-info-day">
+									<p>Java虚拟机（JVM）</p>
+									<p>JVM垃圾回收机制与内存回收</p>
+									<p>什么是多线程?</p>
+									<p>什么是I/O，你真的懂了吗？</p>
+									<p>SpringBoot自动配置原理</p>
+									<p>k8s和Docker关系简单说明</p>
+									<p>SpringBoot与Spring的区别</p>
+									<p>Redis 教程</p>
+									<p>Spring Boot邮件发送功能的实现与原理介绍</p>
+									<p>Spring中@Async注解实现“方法”的异步调用</p>
+									<p>Quartz框架介绍</p>
+									<p>SpringBoot优雅的全局异常处理</p>
+									<p>Maven —— 生命周期</p>
+									<p>为什么需要 Zookeeper</p>
+									<p>CAP原则</p>
+									<p>页面优化缓存技术+资源静态化</p>
+									<p>终于有人把 Nginx 说清楚了，图文详解！</p>
+									<p>单点登录原理与技术实现比较</p>
+
+								</div>
+								<i class="am-icon-quote-right" style="float: right"></i>
+
+							</div>
+						</div>
+					</div>
+
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<!--引入共有底部-->
+	<div th:replace="footer :: footer"></div>
+
+
+	<script src="/static/js/all.js"></script>
+	<script src="/static/js/plugs_paging.js"></script>
+
+</body>
+</html>

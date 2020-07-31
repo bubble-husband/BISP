@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link href="/static/wangEditor/release/wangEditor.min.css"
+	rel="stylesheet">
+<link href="/static/wangEditor/release/fonts/w-e-icon.woff"
+	rel="stylesheet">
+<script src="/static/wangEditor/release/wangEditor.min.js"></script>
+
+<link href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" href="/static/css/editormd/editormd.min.css" />
+<link rel="stylesheet" href="/static/css/all.css">
+<link rel="stylesheet" href="/static/css/editormd/editor.css">
+<link
+	href="https://lib.baomitu.com/font-awesome/5.8.0/css/fontawesome.min.css"
+	rel="stylesheet">
+</head>
+<body>
+    <!--引入共有头部-->
+    <div th:replace="header :: header"></div>
+    <!--页面主体-->
+
+<!-- 	<p>添加一条记录</p>
+	<form action="/consumer/article/add" method="post"
+		enctype="multipart/form-data">
+		<input type="text" name="userId" placeholder="userId"></input> <input
+			type="text" name="title" placeholder="title"></input> <input
+			type="text" name="summary" placeholder="summary"></input> <input
+			type="text" name="content" placeholder="content"></input> <input
+			type="file" name="file" placeholder="titlePicture"></input> <input
+			type="text" name="sortId" placeholder="sortId"></input> <input
+			type="submit" value="添加"></input>
+	</form> -->
+
+	<div style="text-align: center;">
+		<p></p>
+		<h1 >写博客</h1>
+		<p></p>
+	</div>
+	<form action="/consumer/article/add" method="post"
+		enctype="multipart/form-data">
+	<div style="text-align:center;">
+		<div class="zhy-editor">
+			<div class="zhy-editor-input">
+				标题：<input id="zhy-editor-title" type="text" placeholder="输入文章标题">
+				<p></p>
+				简述：<input id="zhy-editor-title" type="text" placeholder="输入文章概述" style="height: 100px">
+
+			</div>
+		</div>
+	</div>
+		<div class="jumbotron" >
+			<div class="container">
+				<div id="editor" >
+
+				</div>
+	
+			</div>
+		</div>
+	<div style="text-align:center;">
+		<div class="zhy-editor">
+			<div class="zhy-editor-input">
+				<button type="button" class="publishBtn am-btn am-btn-danger" onclick="submit_content()">发布博客</button>
+			</div>
+		</div>
+	</div>
+	</form>
+	<!--引入共有底部-->
+	<div th:replace="footer :: footer"></div>
+
+
+
+</body>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    editor.create()
+    function submit_content(){
+    alert("111");
+    var newsMan=$("#newsMan").val();
+    var newsTitle=$("#newsTitle").val();
+
+    $.ajax({
+        type:"post",
+        url:"../contentpublish",
+        data:{
+            "newsMan":$("#newsMan").val(),
+            "newsTitle":$("#newsTitle").val(),
+            /* "introduce":$("#content").val(), */
+            "introduce":editor.txt.html(),
+        },
+        success: function(result){
+            alert("测试！");
+        },
+    });
+} 
+</script>
+</html>

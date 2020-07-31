@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+        <tr>
+        	<th>编号</th>
+        	<th>分类名称</th>
+            <th>博客数目</th>
+        </tr>
+ 
+        <tr th:each="s:${sort}">
+        	<td th:text="${s.sortId}"></td>
+            <td th:text="${s.sortName}"></td>
+            <td th:text="${s.articleNum}"></td>
+        </tr>
+	</table>
+	
+	<p>根据ID查询</p>
+	<form action="/consumer/sort/selectById">
+		<input type="text" name="sortId">
+		<input type="submit" value="查询">
+	</form>
+	
+	<p>根据分类名称查询</p>
+	<form action="/consumer/sort/selectByName">
+		<input type="text" name="sortName">
+		<input type="submit" value="查询">
+	</form>
+
+</body>
+</html>

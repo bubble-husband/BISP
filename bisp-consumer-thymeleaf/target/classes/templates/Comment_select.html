@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+        <tr>
+        	<th>评论编号</th>
+        	<th>评论内容</th>
+            <th>文章编号</th>
+            <th>用户编号</th>
+            <th>上级评论编号</th>
+            <th>是否作者回复</th>
+           
+        </tr>
+ 
+        <tr th:each="c:${comment}">
+        	<td th:text="${c.commentId}"></td>
+            <td th:text="${c.commentContent}"></td>
+            <td th:text="${c.articleId}"></td>
+            <td th:text="${c.userId}"></td>
+            <td th:text="${c.supCommentId}"></td>
+            <td th:text="${c.authorRepty}"></td>
+        </tr>
+	</table>
+	
+	<p>根据ID查询</p>
+	<form action="/consumer/comment/selectById">
+		<input type="text" name="commentId">
+		<input type="submit" value="查询">
+	</form>
+
+</body>
+</html>

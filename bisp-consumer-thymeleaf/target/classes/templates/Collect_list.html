@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+        <tr>
+        	<th>收藏编号</th>
+        	<th>博客编号</th>
+            <th>用户编号</th>
+            <th>收藏时间</th>
+        </tr>
+ 
+        <tr th:each="c:${collect}">
+        	<td th:text="${c.collectId}"></td>
+            <td th:text="${c.articleId}"></td>
+            <td th:text="${c.userId}"></td>
+            <td th:text="${c.collectTime}"></td>
+        </tr>
+	</table>
+	
+	<p>根据ID查询</p>
+	<form action="/consumer/collect/selectById">
+		<input type="text" name="collectId">
+		<input type="submit" value="查询">
+	</form>
+	
+	<p>添加一条记录</p>
+	<form action="/consumer/collect/add">
+		<input type="text" name="articleId">
+		<input type="text" name="userId">
+		<input type="submit" value="添加">
+	</form>
+	
+	<p>删除一条记录</p>
+	<form action="/consumer/collect/delete">
+		<input type="text" name="collectId">
+		<input type="submit" value="删除">
+	</form>
+	
+	<p>更新一条记录</p>
+	<form action="/consumer/collect/update">
+		<input type="text" name="collectId">
+		<input type="text" name="articleId">
+		<input type="text" name="userId">
+		<input type="text" name="collectTime">
+		<input type="submit" value="更新">
+	</form>
+
+</body>
+</html>

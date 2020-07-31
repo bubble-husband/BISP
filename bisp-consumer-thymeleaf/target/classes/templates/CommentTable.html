@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<table>
+	<tr>
+		<td>评论编号</td>
+        <td>评论内容</td>
+		<td>文章编号</td>
+		<td>用户编号</td>
+		<td>上级评论编号</td>
+		<td>是否作者回复</td>
+		<td><a href="/consumer/comment/toAdd">添加</a></td>
+	</tr>
+	<tr th:each="c:${pageInfo.list}">
+		<td th:text="${c.commentId}"></td>
+		<td th:text="${c.commentContent}"></td>
+		<td th:text="${c.articleId}"></td>
+		<td th:text="${c.userId}"></td>
+		<td th:text="${c.supCommentId}"></td>
+		<td th:text="${c.authorRepty}"></td>
+		<td><a th:href="@{'/consumer/comment/toUpdate?commentId=' + ${c.commentId} }">修改</a></td>
+		<td><a th:href="@{'/consumer/comment/delete?commentId=' + ${c.commentId}}">删除</a></td>
+	</tr>
+	</table>
+	<p>当前第&nbsp;<span th:text="${pageInfo.pageNum}"></span>&nbsp;页&nbsp;&nbsp;&nbsp;总共&nbsp;<span th:text="${pageInfo.pages}"></span>&nbsp;页&nbsp;&nbsp;&nbsp;总共&nbsp;<span th:text="${pageInfo.total}"></span>&nbsp;条记录</p>
+	<a th:href="${'/consumer/comment/listPage?pageNum='+pageInfo.navigateFirstPage}">首页</a>
+ 	<a th:href="${'/consumer/comment/listPage?pageNum='+pageInfo.prePage}">上一页</a>
+	<a th:href="${'/consumer/comment/listPage?pageNum='+pageInfo.nextPage}">下一页</a>
+	<a th:href="${'/consumer/comment/listPage?pageNum='+pageInfo.navigateLastPage}">尾页</a>
+
+</body>
+</html>

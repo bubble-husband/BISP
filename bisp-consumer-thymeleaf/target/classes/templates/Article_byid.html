@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:http="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>文章</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="stylesheet" type="text/css" href="css/aboutmetimeline.css">
+    <link href="https://lib.baomitu.com/lightgallery/1.6.12/css/lightgallery.min.css" rel="stylesheet">
+    <link href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/all.css">
+    <link rel="stylesheet" href="/static/css/comment.css">
+    <link rel="stylesheet" href="/static/css/aboutme.css">
+    <link href="https://lib.baomitu.com/font-awesome/5.8.0/css/fontawesome.min.css" rel="stylesheet">
+
+    <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://lib.baomitu.com/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+    <style>
+        .collect{
+            background-color: #fffff;
+            border: none;
+            border-radius: 8px;
+            pading:16px 32px;
+        }
+        .already{
+            background-color: grey;
+            border: none;
+        }
+        .collect:hover{
+            background-color:#3bb4f2;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--引入共有头部-->
+    <div th:replace="header :: header"></div>
+    <!--页面主体-->
+    <div id="main">
+        <div class="am-container">
+            <div class="am-g">
+                <div class="am-u-sm-12 am-u-lg-12">
+                    <div id="wordsView">
+                        <div class="title">
+                            <div class="title-words">
+                                <h1 class="title-words-h1" th:text="${article.title}"></h1>
+                                
+                                <h5></h5>
+                            </div>
+
+                            <div class="title-img">
+                                <p>
+                                    <img th:src="'/static/img/'+${article.titlePicture}"  class="enlargePicture am-img-thumbnail am-radius">
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="zhy-hobby">
+                        <div th:text="'阅读量：'+${article.clickNum}"></div>
+                        <p th:text="'收藏数：'+${article.collectNum}"></p>
+                        <p hidden th:text="'文章id：'+${article.articleId}"  name="articleId"></p>
+                            <blockquote style="padding: 10px 18px" th:text="${article.summary}">
+
+                            </blockquote>
+                        </div>
+                        
+                                <article>
+                                    <!--年份使用淡出动画，内容使用左侧滑入效果-->
+                                    <h3  data-am-scrollspy="{animation: 'scale-up'}" th:text="${article.createTime}"></h3>
+                                    <section data-am-scrollspy="{animation: 'slide-left'}">
+                                        <span class="point-time point-purple"></span>
+                                        <time datetime="2019-04">
+                                            <span th:text="${article.updateTime}"></span>
+                                        </time>
+                                        <aside>
+                                            <p class="brief"><span class="text-yello" th:text="${article.content}">
+                                            </span></p>
+                                        </aside>
+                                    </section>
+                                </article>
+                                 <button class="collect" id="collect" onclick="collect();" ><div id="text">点击收藏</div></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div><p></p></div>
+                    <div class="comment">
+                        <div class="comment-top">
+                            <div class="comment-top-input" th:if="${#httpServletRequest.remoteUser}">
+                                <textarea id="comment" placeholder="评论"></textarea>
+                            </div>
+                            <div class="comment-top-input" th:unless="${#httpServletRequest.remoteUser}">
+                                <div class="goToLogin">
+                                    &nbsp;&nbsp;&nbsp;<a id="toLogin">登录</a>后才可以发表留言呦...
+                                </div>
+                            </div>
+                            <div class="commentBtn">
+                                <button id="commentBtn" type="button" class="am-btn am-btn-secondary">发表留言</button>
+                            </div>
+                        </div>
+                        <!--页面留言-->
+                        <div class="comment-bottom">
+                        	<div class="article-comment-top">
+                        		<span class="article-comment-word">评论</span>
+                        		<div class="article-comment-line"></div>
+                        	</div>
+                        	<div class="new-comment">
+                        		<i class="all-comment am-icon-ellipsis-v"></i>全部评论（<span class="commentNum">评论数目</span>）
+                        	</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="/static/js/all.js"></script>
+<script src="/static/js/leaveMessage.js"></script>
+<!--放大图片插件-->
+<script src="/static/js/lightgallery/lightgallery.js"></script>
+<script src="/static/js/lightgallery/picturefill.min.js"></script>
+<script src="/static/js/lightgallery/lg-pager.js"></script>
+<script src="/static/js/lightgallery/lg-autoplay.js"></script>
+<script src="/static/js/lightgallery/lg-fullscreen.js"></script>
+<script src="/static/js/lightgallery/lg-zoom.js"></script>
+<script>
+    lightGallery(document.getElementById('wordsView'));
+</script>
+
+<script>
+
+    window.onload=function(){
+        //发送请求，判断用户是否收藏该篇文章
+        var aId = [[${article.articleId}]];
+        $.ajax({
+            type : 'post',
+            url : '/consumer/collect/selectByUidAndAid',
+            dataType : 'text',
+            data : {
+                "articleId" : aId,
+
+            },
+            success : function (data) {
+                if(data=="alreadyCollect"){
+                //用户已经收藏过，给按钮添加样式
+                    $("#collect").addClass("already");
+                    // $("#collect").attr("disabled","disabled");//固有属性
+                    $('#text').html('取消收藏');
+
+                }
+                else{
+                    //用户没有收藏
+                }
+            }
+            })
+
+    }
+
+    //点击收藏按钮触发方法
+    function collect() {
+        //获取文章id
+        var aId = [[${article.articleId}]];
+        var collectNum =[[${article.collectNum}]];
+        //判断用户是否登录
+        $.ajax({
+            url: '/consumer/collect/findOne',
+            dataType: 'text',
+            data: {},
+            success: function (data) {
+                if (data == "alreadyLogin") {
+                    //用户已经登录,触发收藏方法
+                    //获取按钮的text值
+                    var text = $("#text").html();
+                    if(text == "点击收藏"){
+                        $.ajax({
+                            type: 'post',
+                            url: '/consumer/collect/add',
+                            data: {
+                                "articleId": aId,
+                            },
+
+                            //如果收藏成功
+                            success: function (data) {
+                                if (data == "alreadyAdd") {
+                                    //用户已经收藏过，给按钮添加样式
+                                    $("#collect").addClass("already");
+                                    $('#text').html('取消收藏');
+                                    $.get("/consumer/article/selectByIdOne", {articleId: aId}, function (article) {
+                                        if(article != null) {
+                                            $("#collectNum").text("收藏数："+article.collectNum);
+                                            alert("收藏成功!");
+                                        }
+                                    });
+
+                                }
+
+                            }
+                        });
+                    }
+                    else{//按钮不是点击收藏，则可以点击取消收藏
+                        $.post('/consumer/collect/deleteOne', {articleId: aId}, function(data) {
+                            if(data =="delSuccess"){
+                                $.get("/consumer/article/selectByIdOne", {articleId: aId}, function (article){
+                                    $("#collectNum").text("收藏数："+article.collectNum);
+                                    $("#collect").removeClass("already");
+                                    $('#text').html('点击收藏');
+                                });
+                            }
+                            else{
+                                alert("取消收藏失败！");
+                            }
+                        });
+                    }
+                } else {
+                    //用户没有登录
+                    alert("您尚未登录，请先登录！");
+                    location.href = "http://localhost/consumer/token/login";
+                }
+            }
+        });
+
+    }
+
+
+</script>
+</body>
+</html>

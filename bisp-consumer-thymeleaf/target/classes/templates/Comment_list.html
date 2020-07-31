@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+        <tr>
+        	<th>评论编号</th>
+        	<th>评论内容</th>
+            <th>文章编号</th>
+            <th>用户编号</th>
+            <th>上级评论编号</th>
+            <th>是否作者回复</th>
+           
+        </tr>
+ 
+        <tr th:each="c:${comment}">
+        	<td th:text="${c.commentId}"></td>
+            <td th:text="${c.commentContent}"></td>
+            <td th:text="${c.articleId}"></td>
+            <td th:text="${c.userId}"></td>
+            <td th:text="${c.supCommentId}"></td>
+            <td th:text="${c.authorRepty}"></td>
+        </tr>
+	</table>
+	
+	<p>根据ID查询</p>
+	<form action="/consumer/comment/selectById">
+		<input type="text" name="commentId">
+		<input type="submit" value="查询">
+	</form>
+	
+	<p>添加一条记录</p>
+	<form action="/consumer/comment/add">
+		<input type="text" name="commentContent" placeholder="commentContent">
+		<input type="text" name="articleId" placeholder="articleId">
+		<input type="text" name="userId" placeholder="userId">
+		<input type="text" name="supCommentId" placeholder="supCommentId">
+		<input type="text" name="authorRepty" placeholder="authorRepty">
+		<input type="submit" value="添加">
+	</form>
+	
+	<p>删除一条记录</p>
+	<form action="/consumer/comment/delete">
+		<input type="text" name="commentId">
+		<input type="submit" value="删除">
+	</form>
+	
+	<p>更新一条记录</p>
+	<form action="/consumer/comment/update">
+		<input type="text" name="commentId" placeholder="commentId">
+		<input type="text" name="commentContent" placeholder="commentContent">
+		<input type="text" name="articleId" placeholder="articleId">
+		<input type="text" name="userId" placeholder="userId">
+		<input type="text" name="supCommentId" placeholder="supCommentId">
+		<input type="text" name="authorRepty" placeholder="authorRepty">
+		<input type="submit" value="更新">
+	</form>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+        <tr>
+        	<th>文章编号</th>
+        	<th>用户编号</th>
+            <th>标题</th>
+            <th>摘要</th>
+            <th>内容</th>
+            <th>点击数</th>
+            <th>评论数</th>
+            <th>收藏数</th>
+            <th>创建时间</th>
+            <th>最后修改时间</th>
+            <th>标题图片</th>
+            <th>分类编号</th>
+        </tr>
+ 
+        <tr th:each="a:${article}">
+        	<td th:text="${a.articleId}"></td>
+            <td th:text="${a.userId}"></td>
+            <td th:text="${a.title}"></td>
+            <td th:text="${a.summary}"></td>
+            <td th:text="${a.content}"></td>
+            <td th:text="${a.clickNum}"></td>
+            <td th:text="${a.commentNum}"></td>
+            <td th:text="${a.collectNum}"></td>
+            <td th:text="${a.createTime}"></td>
+            <td th:text="${a.updateTime}"></td>
+            <td th:text="${a.titlePicture}"></td>
+            <td th:text="${a.sortId}"></td>
+        </tr>
+	</table>
+	
+	<p>根据ID查询</p>
+	<form action="/consumer/article/selectById">
+		<input type="text" name="articleId">
+		<input type="submit" value="查询">
+	</form>
+
+</body>
+</html>

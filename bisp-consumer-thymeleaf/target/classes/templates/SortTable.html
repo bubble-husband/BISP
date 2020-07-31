@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<table>
+	<tr>
+		<td>编号</td>
+        <td>分类名称</td>
+		<td>博客数目</td>
+		<td>操作</td>
+		<td><a href="/consumer/sort/toAdd">添加</a></td>
+	</tr>
+	<tr th:each="s:${pageInfo.list}">
+		<td th:text="${s.sortId}"></td>
+		<td th:text="${s.sortName}"></td>
+		<td th:text="${s.articleNum}"></td>
+		<td><a th:href="@{'/consumer/sort/toUpdate?sortId=' + ${s.sortId} }">修改</a></td>
+		<td><a th:href="@{'/consumer/sort/delete?sortId=' + ${s.sortId}}">删除</a></td>
+	</tr>
+	</table>
+	<p>当前第&nbsp;<span th:text="${pageInfo.pageNum}"></span>&nbsp;页&nbsp;&nbsp;&nbsp;总共&nbsp;<span th:text="${pageInfo.pages}"></span>&nbsp;页&nbsp;&nbsp;&nbsp;总共&nbsp;<span th:text="${pageInfo.total}"></span>&nbsp;条记录</p>
+	<a th:href="${'/consumer/sort/listPage?pageNum='+pageInfo.navigateFirstPage}">首页</a>
+ 	<a th:href="${'/consumer/sort/listPage?pageNum='+pageInfo.prePage}">上一页</a>
+	<a th:href="${'/consumer/sort/listPage?pageNum='+pageInfo.nextPage}">下一页</a>
+	<a th:href="${'/consumer/sort/listPage?pageNum='+pageInfo.navigateLastPage}">尾页</a>
+
+</body>
+</html>

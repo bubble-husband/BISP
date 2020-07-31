@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:http="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <!--所有页面共有头部-->
+    <div th:fragment="header">
+        <div class="header">
+            <div class="am-topbar" style="margin-bottom: 0">
+
+
+                <!--手机适配导航显示按钮-->
+                <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" style="background-color: #CCCCCC;border-color: white;border-radius: 6px" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+                <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+                    <ul class="am-nav am-nav-pills am-topbar-nav">
+                        <li><a class="top_bar" href="/consumer/home/index" style="cursor: pointer;"><span class="am-icon-home"></span>&nbsp;首页</a></li>
+                        <li><a class="top_bar" href="/consumer/sort/listSort" style="cursor: pointer;"><span class="am-icon-th"></span>&nbsp;分类</a></li>
+                        <li><a class="top_bar" href="/consumer/archives/listArchives" style="cursor: pointer;"><span class="am-icon-archive"></span>&nbsp;归档</a></li>
+                        <li><a class="top_bar" href="/consumer/article/toAdd" style="cursor: pointer;"><span class="am-icon-calendar-plus-o"></span>&nbsp;写博客</a></li>
+                        <li><a class="top_bar" href="/consumer/home/aboutme" style="cursor: pointer;"><span class="am-icon-user"></span>&nbsp;关于我们</a> </li>
+                    </ul>
+
+                   
+
+                    
+                    <div class="am-topbar-right" th:if="${session.remoteUser!=null}" >
+                        <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
+                            <button class="personalSpace am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>
+                            <span th:text="${session.remoteUser}"></span>
+                            <span class="am-icon-caret-down"></span>
+                            </button>
+                            <ul class="am-dropdown-content">
+                                <li><a href="/user" >个人主页</a></li>
+                                <li><a href="/superadmin" >网站后台管理</a></li>
+                                <li><a href="/user" class="news">消息</a></li>
+                                <li><a href="/consumer/logout">退出登录</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="am-topbar-right" th:if="${session.remoteUser==null}">
+                        <a href="/consumer/user/register" class="am-btn am-btn-primary am-topbar-btn am-btn-sm" style="color: white">注册</a>
+                    </div>
+                    <div class="am-topbar-right" th:if="${session.remoteUser==null}">
+                        <a href="/consumer/token/login" class="loginBtn am-btn am-btn-primary am-topbar-btn am-btn-sm" style="color: white">登录</a>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</html>

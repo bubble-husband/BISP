@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="/consumer/comment/update" method="post">
+		<table>
+			<tr>
+				<td>评论编号</td>
+				<td>评论内容</td>
+				<td>文章编号</td>
+				<td>用户编号</td>
+				<td>上级评论编号</td>
+				<td>是否作者回复</td>
+				<td>操作</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="commentId" placeholder="评论编号" th:field="*{comment.commentId}" readonly="readonly"></td>
+				<td><input type="text" name="commentContent" placeholder="评论内容" th:field="*{comment.commentContent}"></td>
+				<td><input type="text" name="articleId" placeholder="文章编号" th:field="*{comment.articleId}"></td>
+				<td><input type="text" name="userId" placeholder="用户编号" th:field="*{comment.userId}"></td>
+				<td><input type="text" name="supCommentId" placeholder="上级评论编号" th:field="*{comment.supCommentId}"></td>
+				<td><input type="text" name="authorRepty" placeholder="是否作者回复" th:field="*{comment.authorRepty}"></td>
+				<td><input type="submit" value="更新"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:http="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<title>500</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" href="/static/css/all.css">
+<link rel="stylesheet" href="/static/css/errorpage.css">
+<link
+	href="https://lib.baomitu.com/font-awesome/5.8.0/css/fontawesome.min.css"
+	rel="stylesheet">
+
+<script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+<style type="text/css">
+td {
+	white-space: nowrap;
+}
+</style>
+</head>
+<body>
+	<div id="app">
+		<div class="header">
+			<div class="am-topbar" style="margin-bottom: 0">
+
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav">
+						<li><a class="top_bar" href="/consumer/home/index"
+							style="cursor: pointer;"><span class="am-icon-home"></span>&nbsp;首页</a></li>
+						<li><a class="top_bar" href="/consumer/sort/listSort"
+							style="cursor: pointer;"><span class="am-icon-th"></span>&nbsp;分类</a></li>
+						<li><a class="top_bar" href="/consumer/archives/listArchives"
+							style="cursor: pointer;"><span class="am-icon-archive"></span>&nbsp;归档</a></li>
+						<li><a class="top_bar" href="/consumer/article/toAdd"
+							style="cursor: pointer;"><span
+								class="am-icon-calendar-plus-o"></span>&nbsp;写博客</a></li>
+						<li><a class="top_bar" href="/consumer/home/aboutme"
+							style="cursor: pointer;"><span class="am-icon-user"></span>&nbsp;关于我们</a>
+						</li>
+					</ul>
+
+
+				</div>
+			</div>
+		</div>
+		<div id="main">
+			<div class="error404Page">
+				<img src="/static/img/errorpage/4XX.png" />
+				<table align="center">
+					<tr>
+						<td>系统状态码:</td>
+						<td>[[${status}]]</td>
+					</tr>
+					<tr>
+						<td>错误提示:</td>
+						<td>[[${error}]]</td>
+					</tr>
+					<tr>
+						<td>异常对象:</td>
+						<td>[[${exception}]]</td>
+					</tr>
+					<tr>
+						<td>异常消息:</td>
+						<td>[[${message}]]</td>
+					</tr>
+					<tr>
+						<td>自定义错误消息:</td>
+						<td>[[${ext.msg}]]</td>
+					</tr>
+					<tr>
+						<td>作者:</td>
+						<td>[[${author}]]</td>
+					</tr>
+					<tr>
+						<td>时间:</td>
+						<td>[[${timestamp}]]</td>
+					</tr>
+				</table>
+			</div>
+			<div class="errorWords">
+				<div class="errorWords_display">
+					<p>
+						<a href="consumer/user/show"><u>返回首页</u></a><a href="#"
+							style="margin-left: 30px"></a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<!--引入共有底部-->
+		<div th:replace="footer :: footer"></div>
+	</div>
+
+	<script src="/static/js/all.js"></script>
+</body>
+</html>
